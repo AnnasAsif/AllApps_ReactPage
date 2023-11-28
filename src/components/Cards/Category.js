@@ -6,7 +6,7 @@ function Category(props) {
         <span className="card">
           <img src={props.image} alt="Avatar" style={{width:'100%'}}/>
           <span className="container">
-            <h4>{props.name}</h4>
+            <h5>{props.name}</h5>
           </span>
           <input type='submit' value='Show Data' onClick={()=>{props.onClick()}}/>
         </span>

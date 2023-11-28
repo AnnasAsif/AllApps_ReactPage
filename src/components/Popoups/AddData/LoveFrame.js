@@ -13,6 +13,7 @@ export class LoveFrame extends Component {
             categoryId: this.props.data.categoryId,
             bundle:this.props.data.bundlename,
             image: [],
+            images:[],
             folder: this.props.data.categoryName
         }
         this.handleX = this.handleX.bind(this)
@@ -20,6 +21,7 @@ export class LoveFrame extends Component {
         this.handleH = this.handleH.bind(this)
         this.handleW = this.handleW.bind(this)
         this.handleImage = this.handleImage.bind(this)
+        this.handleImages = this.handleImages.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -32,14 +34,29 @@ export class LoveFrame extends Component {
       this.setState({image: event.target.files[0]}); 
       console.log('=================>>>>>>',this.state);
     }
+    handleImages=(event)=>{
+      const imagesArray = Array.from(event.target.files); // Convert FileList to array
+
+      console.log(imagesArray);
+      this.setState({images: imagesArray},()=>{
+        console.log('=================>>>>>>',this.state.images);
+
+      }); 
+    }
     handleSubmit = async (event)=>{
         event.preventDefault();
         const formData = new FormData();
         for (let x in this.state) {
-          formData.append(x, this.state[x]);          //saving data in formData
-          console.log(x, ': ', this.state[x]);
+          if(x !== 'images'){
+            formData.append(x, this.state[x]);          //saving data in formData
+            console.log(x, ': ', this.state[x]);
+
+          }
         }
-         var api= "http://172.16.0.107:9010/api/frames/saveFrame";
+        this.state.images.forEach((image, index) => {
+          formData.append(`images`, image);
+        });
+         var api= "http://172.16.0.94:9001/api/templates/temporary";
          
          if(api){
           const data = await fetch(api, {
@@ -82,6 +99,9 @@ export class LoveFrame extends Component {
                     <br/>
                     <b>Upload Frame: </b>
                     <input type="file" required onChange={this.handleImage}/>
+                    <br/>
+                    <b>Upload Frames: </b>
+                    <input type="file" multiple required onChange={this.handleImages}/>
                     <br/>
                     
                     <input type="submit" value="Upload Data" onClick={()=>{}}/>

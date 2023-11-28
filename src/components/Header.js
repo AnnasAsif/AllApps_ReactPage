@@ -7,7 +7,7 @@ const Header = (props) => {
         <div className='NavProp'>
            <Navbar variant="dark" bg="dark" expand="lg">
                 <Container fluid>
-                  <Navbar.Brand href="#home">                    
+                  <Navbar.Brand>                    
                     <ul>
                       <li>
                         <img
@@ -19,6 +19,7 @@ const Header = (props) => {
                         />
                       </li>
                       <li><h1>ADMIN PANEL</h1></li>
+                      <li onClick={()=>{console.log("servers")}}><b>SERVERS</b></li>
                     </ul>
                   </Navbar.Brand>
                 </Container>
